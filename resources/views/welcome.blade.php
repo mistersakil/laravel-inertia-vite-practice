@@ -9,7 +9,7 @@
     <meta name="description" content="Web site created using create-react-app" />
 
 
-    <title>React App</title>
+    <title>{{ $metaTitle ?? 'Dashboard' }}</title>
     @viteReactRefresh
     @vite(['resources/js/app.jsx'])
     @inertiaHead

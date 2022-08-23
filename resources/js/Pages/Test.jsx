@@ -1,7 +1,7 @@
 import React from "react";
 
 const Test = ({ test }) => {
-    return <div>Test. value of props is {test}</div>;
+    return <h1>Test. value of props is {test}</h1>;
 };
 
 export default Test;

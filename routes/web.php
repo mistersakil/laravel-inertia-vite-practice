@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Backend\UsersController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [TestController::class, 'show']);
+
+Route::resource('users', UsersController::class);
