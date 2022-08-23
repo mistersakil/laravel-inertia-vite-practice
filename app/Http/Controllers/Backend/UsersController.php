@@ -15,10 +15,18 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->get()->toArray();
+        $users = User::latest()->get();
+
         return inertia('User/index', [
-            'users' => $users
-        ]);
+            'users' => $users->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'view' => route('users.show', encrypt($user))
+                ];
+            })
+        ])->withViewData(['metaTitle' => "User List"]);
     }
 
     /**
