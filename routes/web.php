@@ -8,5 +8,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        $data['pageTitle'] = "Dashboard";
+        return inertia('Backend/Dashboard/index', $data)->withViewData(['metaTitle' => "Admin Panel"]);
+    });
     Route::resource('/users', UsersController::class);
 });

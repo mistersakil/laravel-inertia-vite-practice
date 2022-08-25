@@ -16,17 +16,16 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::latest()->get();
-
-        return inertia('Backend/Users/index', [
-            'users' => $users->map(function ($user) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'view' => route('users.show', encrypt($user))
-                ];
-            })
-        ])->withViewData(['metaTitle' => "User List"]);
+        $data['users'] = $users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'view' => route('users.show', encrypt($user))
+            ];
+        });
+        $data['pageTitle'] = "User List";
+        return inertia('Backend/Users/index', $data)->withViewData(['metaTitle' => "Users"]);
     }
 
     /**

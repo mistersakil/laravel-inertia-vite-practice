@@ -1,12 +1,12 @@
 import React from "react";
 import Layout from "../../../Components/Backend/Layout";
-export default ({ users }) => {
+export default ({ users, pageTitle }) => {
     return (
         <Layout>
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fas fa-table me-1"></i>
-                    User List
+                    {pageTitle}
                 </div>
                 <div className="card-body">
                     <ul>
