@@ -7,4 +7,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::resource('users', UsersController::class);
+Route::prefix('admin')->group(function () {
+    Route::resource('/users', UsersController::class);
+});

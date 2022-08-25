@@ -17,7 +17,7 @@ class UsersController extends Controller
     {
         $users = User::latest()->get();
 
-        return inertia('User/index', [
+        return inertia('Backend/Users/index', [
             'users' => $users->map(function ($user) {
                 return [
                     'id' => $user->id,
