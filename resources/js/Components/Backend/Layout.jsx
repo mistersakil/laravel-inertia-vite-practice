@@ -23,8 +23,8 @@ export default function Layout({ children }) {
                                     Tables
                                 </li>
                             </ol>
-                            {children}
                         </div>
+                        <div className="container-fluid px-4">{children}</div>
                     </main>
                     <Footer></Footer>
                 </div>

@@ -1,12 +1,17 @@
 import React from "react";
 import Layout from "../../../Components/Backend/Layout";
-export default ({ users, pageTitle }) => {
+import { Head } from "@inertiajs/inertia-react";
+<Head>
+    <title>Your page title</title>
+    <meta name="description" content="Your page description" />
+</Head>;
+export default ({ users, metaTitle }) => {
     return (
         <Layout>
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fas fa-table me-1"></i>
-                    {pageTitle}
+                    {metaTitle}
                 </div>
                 <div className="card-body">
                     <ul>

@@ -24,8 +24,8 @@ class UsersController extends Controller
                 'view' => route('users.show', encrypt($user))
             ];
         });
-        $data['pageTitle'] = "User List";
-        return inertia('Backend/Users/index', $data)->withViewData(['metaTitle' => "Users"]);
+        $data['metaTitle'] = "User List";
+        return inertia('Backend/Users/index', $data);
     }
 
     /**
