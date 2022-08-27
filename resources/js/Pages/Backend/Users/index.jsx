@@ -1,11 +1,13 @@
 import React from "react";
 import BackHead from "../../../Components/Backend/BackHead";
 import Layout from "../../../Components/Backend/Layout";
+import Breadcrumb from "../../../Components/Backend/Breadcrumb";
 
 export default ({ users, metaTitle }) => {
     return (
         <Layout>
             <BackHead title="User List" description="List of all users" />
+            <Breadcrumb title="Users" />
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fas fa-table me-1"></i>

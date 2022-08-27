@@ -9,29 +9,30 @@ import BackHead from "./BackHead";
 
 export default function Layout({ children }) {
     return (
-        <main className="sb-nav-fixed">
-            <BackHead title="Dashboard" description="Dashboard" />
-            <Navbar></Navbar>
-            <div id="layoutSidenav">
-                <LeftSidebar></LeftSidebar>
-                <div id="layoutSidenav_content">
-                    <main>
-                        <div className="container-fluid px-4">
-                            <h1 className="mt-4">Tables</h1>
-                            <ol className="breadcrumb mb-4">
-                                <li className="breadcrumb-item">
-                                    <a href="index.html">Dashboard</a>
-                                </li>
-                                <li className="breadcrumb-item active">
-                                    Tables
-                                </li>
-                            </ol>
-                        </div>
-                        <div className="container-fluid px-4">{children}</div>
-                    </main>
-                    <Footer></Footer>
+        <>
+            <main className="sb-nav-fixed">
+                <BackHead title="Dashboard" description="Dashboard" />
+                <Navbar></Navbar>
+                <div id="layoutSidenav">
+                    <LeftSidebar></LeftSidebar>
+                    <div id="layoutSidenav_content">
+                        <main id="contentArea">
+                            <div
+                                className="container-fluid px-4"
+                                id="mainContent"
+                            >
+                                {children}
+                            </div>
+                            {/* #mainContent */}
+                        </main>
+                        {/* #contentArea */}
+                        <Footer></Footer>
+                    </div>
+                    {/* #layoutSidenav_content */}
                 </div>
-            </div>
-        </main>
+                {/* #layoutSidenav */}
+            </main>
+            {/* main */}
+        </>
     );
 }
