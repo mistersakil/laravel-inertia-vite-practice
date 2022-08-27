@@ -1,11 +1,14 @@
 import React from "react";
-import BackHead from "../../../Components/Backend/BackHead";
-import Layout from "../../../Components/Backend/Layout";
+import Layout from "../../Components/Backend/Layout";
+import { Head } from "@inertiajs/inertia-react";
 
 export default ({ users, metaTitle }) => {
     return (
         <Layout>
-            <BackHead title="User List" description="List of all users" />
+            <Head>
+                <title>Your page title</title>
+                <meta name="description" content="Your page description" />
+            </Head>
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fas fa-table me-1"></i>

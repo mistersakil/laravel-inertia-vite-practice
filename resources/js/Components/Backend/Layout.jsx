@@ -4,10 +4,12 @@ import "../../../backend/css/styles.css";
 import "../../../backend/js/scripts";
 import LeftSidebar from "./LeftSidebar";
 import Footer from "./Footer";
+import BackHead from "./BackHead";
 
 export default function Layout({ children }) {
     return (
         <main className="sb-nav-fixed">
+            <BackHead title="Dashboard" description="Dashboard" />
             <Navbar></Navbar>
             <div id="layoutSidenav">
                 <LeftSidebar></LeftSidebar>

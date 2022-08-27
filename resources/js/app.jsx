@@ -12,5 +12,4 @@ createInertiaApp({
         const root = ReactDOM.createRoot(el);
         root.render(<App {...props} />);
     },
-    title: (title) => `${title} - Laravel react inertia app`,
 });

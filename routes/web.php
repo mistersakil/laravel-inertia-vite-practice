@@ -11,7 +11,7 @@ Route::get('/', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         $data['metaTitle'] = "Dashboard";
-        return inertia('Backend/Dashboard/index', $data)->withViewData(['metaTitle' => $data['metaTitle']]);
+        return inertia('Backend/Dashboard', $data)->withViewData(['metaTitle' => $data['metaTitle']]);
     });
     Route::resource('/users', UsersController::class);
 });
