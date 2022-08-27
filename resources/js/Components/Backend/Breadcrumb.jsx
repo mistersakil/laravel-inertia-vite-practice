@@ -14,7 +14,7 @@ export default function Breadcrumb({
                 id="breadcrumb"
                 className="d-flex flex-row justify-content-between align-items-center"
             >
-                <h1 className="mt-3 mb-3 h2">{title}</h1>
+                <h1 className="mt-3 mb-3 h3">{title}</h1>
                 {isVisible && (
                     <div className="links d-flex gap-1">
                         <Link
