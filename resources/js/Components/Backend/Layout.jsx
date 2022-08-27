@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import "../../../backend/css/styles.css";
+import "../../../backend/js/bootstrap5";
 import "../../../backend/js/scripts";
 import LeftSidebar from "./LeftSidebar";
 import Footer from "./Footer";
