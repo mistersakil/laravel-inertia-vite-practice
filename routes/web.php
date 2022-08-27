@@ -8,10 +8,15 @@ Route::get('/', function () {
 });
 
 ## Admin routes
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         $data['metaTitle'] = "Dashboard";
         return inertia('Backend/Dashboard', $data)->withViewData(['metaTitle' => $data['metaTitle']]);
     });
-    Route::resource('/users', UsersController::class);
+
+    ### User routes
+    Route::controller(UsersController::class)->prefix('users')->name('users.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/show/{id}', 'show')->name('show');
+    });
 });

@@ -21,7 +21,7 @@ class UsersController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'view' => route('users.show', encrypt($user))
+                'view' => route('admin.users.show', encrypt($user))
             ];
         });
         $data['metaTitle'] = "User List";
