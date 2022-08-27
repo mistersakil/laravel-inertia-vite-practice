@@ -3,6 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
+    function handleSidebarToggle(event) {
+        event.preventDefault();
+        document.body.classList.toggle("sb-sidenav-toggled");
+        localStorage.setItem(
+            "sb|sidebar-toggle",
+            document.body.classList.contains("sb-sidenav-toggled")
+        );
+    }
     return (
         <>
             <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -15,6 +23,7 @@ export default function Navbar() {
                     className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
                     id="sidebarToggle"
                     href="#!"
+                    onClick={handleSidebarToggle}
                 >
                     <FontAwesomeIcon icon={faBars} />
                 </button>

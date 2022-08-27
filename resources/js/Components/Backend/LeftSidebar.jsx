@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "@inertiajs/inertia-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGauge, faUsers } from "@fortawesome/free-solid-svg-icons";
 export default function LeftSidebar() {
     return (
         <div id="layoutSidenav_nav">
@@ -9,16 +11,15 @@ export default function LeftSidebar() {
             >
                 <div className="sb-sidenav-menu">
                     <div className="nav">
-                        <div className="sb-sidenav-menu-heading">Core</div>
                         <Link className="nav-link" href="/admin">
                             <div className="sb-nav-link-icon">
-                                <i className="fas fa-tachometer-alt"></i>
+                                <FontAwesomeIcon icon={faGauge} />
                             </div>
                             Dashboard
                         </Link>
                         <Link className="nav-link" href="/admin/users">
                             <div className="sb-nav-link-icon">
-                                <i className="fas fa-tachometer-alt"></i>
+                                <FontAwesomeIcon icon={faUsers} />
                             </div>
                             Users
                         </Link>
