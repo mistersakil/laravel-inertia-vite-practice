@@ -8,15 +8,22 @@ use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
+    private $data = [];
+
+    public function __construct()
+    {
+        $this->data['listLink'] = route('admin.users.index');
+        $this->data['createLink'] = route('admin.users.create');
+    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response view
      */
     public function index()
     {
         $users = User::latest()->get();
-        $data['users'] = $users->map(function ($user) {
+        $this->data['users'] = $users->map(function ($user) {
             return [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -24,8 +31,8 @@ class UsersController extends Controller
                 'view' => route('admin.users.show', encrypt($user))
             ];
         });
-        $data['metaTitle'] = "User List";
-        return inertia('Backend/Users/index', $data);
+
+        return inertia('Backend/Users/Index', $this->data);
     }
 
     /**
@@ -35,7 +42,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Backend/Users/Create', $this->data);
     }
 
     /**
