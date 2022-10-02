@@ -18,6 +18,7 @@ export default function Create({ listLink, createLink }) {
                     <i className="fas fa-table me-1"></i>
                     {title}
                 </div>
+                {/** .card-header */}
                 <div className="card-body">
                     <form className="row g-3">
                         <div className="col-md-4">
@@ -72,6 +73,7 @@ export default function Create({ listLink, createLink }) {
                     {/** form.row */}
                 </div>
             </div>
+               {/** .card */}
         </Layout>
     );
 }

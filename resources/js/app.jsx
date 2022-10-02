@@ -2,7 +2,6 @@ import "./bootstrap";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/inertia-react";
-
 import { InertiaProgress } from "@inertiajs/progress";
 InertiaProgress.init();
 

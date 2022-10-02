@@ -24,9 +24,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     ### User routes
     Route::controller(UsersController::class)->prefix('users')->name('users.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/show/{id}', 'show')->name('show');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/create', 'store')->name('store');
+        Route::resource('/', UsersController::class);
     });
 });
