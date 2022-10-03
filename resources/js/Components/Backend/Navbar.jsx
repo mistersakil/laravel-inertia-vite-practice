@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faUser } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "@inertiajs/inertia-react";
 export default function Navbar() {
     function handleSidebarToggle(event) {
         event.preventDefault();
@@ -14,9 +14,9 @@ export default function Navbar() {
     return (
         <>
             <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <a className="navbar-brand ps-3" href="index.html">
-                    Start Bootstrap
-                </a>
+                <Link className="navbar-brand ps-3" href="/admin">
+                    Admin Panel
+                </Link>
                 {/* .navbar-brand */}
 
                 <button
