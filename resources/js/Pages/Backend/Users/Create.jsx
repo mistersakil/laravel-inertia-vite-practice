@@ -5,7 +5,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faPlus,
-    faTrash,
     faRefresh,
     faUpload,
     faBan,
@@ -19,7 +18,7 @@ const Create = ({ listLink, createLink }) => {
      * userInitialValue object
      * @type {{name: string, email: string, password: number|string|symbol}}
      */
-    const userInitialValue = { name: null, email: null, password: null };
+    const userInitialValue = { name: "", email: "", password: "" };
     const [users, setUser] = useState([userInitialValue]);
 
     /**
@@ -29,7 +28,7 @@ const Create = ({ listLink, createLink }) => {
      */
     const handleFormChange = (index, event) => {
         let usersClone = [...users];
-        usersClone[index][event.target.name] = event.target.value;
+        usersClone[index][event.target.id] = event.target.value;
         setUser(usersClone);
     };
 
@@ -61,6 +60,15 @@ const Create = ({ listLink, createLink }) => {
         setUser([userInitialValue]);
     };
 
+    /**
+     * save users
+     */
+    const store = () => {
+        console.log(users);
+        e.preventDefault();
+        Inertia.post("/users", values);
+    };
+
     return (
         <Layout>
             <BackHead title={title} description={description} />
@@ -76,36 +84,6 @@ const Create = ({ listLink, createLink }) => {
                         {title}
                     </div>
                     {/** .headerTitle*/}
-                    <div className="btnGroup d-flex gap-1">
-                        <button
-                            type="button"
-                            className="btn badge bg-dark text-light"
-                            onClick={addUserInput}
-                            title="Add Row"
-                        >
-                            <FontAwesomeIcon icon={faPlus} /> Add Row
-                        </button>
-                        {/** .btn */}
-                        <button
-                            type="button"
-                            className="btn badge bg-dark text-light"
-                            onClick={resetUserInput}
-                            title="Reset"
-                        >
-                            <FontAwesomeIcon icon={faRefresh} /> Reset
-                        </button>
-                        {/** .btn */}
-                        <button
-                            type="button"
-                            className="btn badge bg-dark text-light"
-                            onClick={addUserInput}
-                            title="Save"
-                        >
-                            <FontAwesomeIcon icon={faUpload} /> Save
-                        </button>
-                        {/** .btn */}
-                    </div>
-                    {/** .btnGroup */}
                 </div>
                 {/** .card-header */}
                 <div className="card-body">
@@ -121,6 +99,9 @@ const Create = ({ listLink, createLink }) => {
                                                 id="name"
                                                 value={item.name}
                                                 placeholder="Full Name"
+                                                onChange={(e) =>
+                                                    handleFormChange(key, e)
+                                                }
                                             />
                                             <label htmlFor="name">
                                                 Full Name
@@ -137,6 +118,9 @@ const Create = ({ listLink, createLink }) => {
                                                 id="email"
                                                 value={item.email}
                                                 placeholder="Email"
+                                                onChange={(e) =>
+                                                    handleFormChange(key, e)
+                                                }
                                             />
                                             <label htmlFor="email">Email</label>
                                         </div>
@@ -151,6 +135,9 @@ const Create = ({ listLink, createLink }) => {
                                                 id="password"
                                                 value={item.password}
                                                 placeholder="Password"
+                                                onChange={(e) =>
+                                                    handleFormChange(key, e)
+                                                }
                                             />
                                             <label htmlFor="password">
                                                 Password
@@ -161,19 +148,6 @@ const Create = ({ listLink, createLink }) => {
 
                                     <div className="col-md-1">
                                         <div className="form-floating mt-3 d-flex gap-1">
-                                            {/* {key == users.length - 1 && (
-                                                <button
-                                                    type="button"
-                                                    className="btn badge bg-warning"
-                                                    onClick={addUserInput}
-                                                    title="Add Row"
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faPlus}
-                                                    />
-                                                </button>
-                                            )} */}
-
                                             <button
                                                 type="button"
                                                 className="btn badge bg-danger"
@@ -204,14 +178,38 @@ const Create = ({ listLink, createLink }) => {
                         })}
                         {/** form.row */}
 
-                        {/* <div className="col-12">
-                            <button
-                                type="submit"
-                                className="btn btn-primary float-end"
-                            >
-                                Save
-                            </button>
-                        </div> */}
+                        <div className="col-12">
+                            <div className="btnGroup d-flex gap-1">
+                                <button
+                                    type="button"
+                                    className="btn badge bg-dark text-light"
+                                    onClick={addUserInput}
+                                    title="Add Row"
+                                >
+                                    <FontAwesomeIcon icon={faPlus} /> Add Row
+                                </button>
+                                {/** .btn */}
+                                <button
+                                    type="button"
+                                    className="btn badge bg-warning text-dark"
+                                    onClick={resetUserInput}
+                                    title="Reset"
+                                >
+                                    <FontAwesomeIcon icon={faRefresh} /> Reset
+                                </button>
+                                {/** .btn */}
+                                <button
+                                    type="button"
+                                    className="btn badge bg-primary text-light"
+                                    onClick={store}
+                                    title="Save"
+                                >
+                                    <FontAwesomeIcon icon={faUpload} /> Save
+                                </button>
+                                {/** .btn */}
+                            </div>
+                            {/** .btnGroup */}
+                        </div>
                         {/** .col */}
                     </form>
                     {/** form */}
