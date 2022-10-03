@@ -3,13 +3,63 @@ import Layout from "../../../Components/Backend/Layout";
 import Breadcrumb from "../../../Components/Backend/Breadcrumb";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+    faPlus,
+    faTrash,
+    faRefresh,
+    faUpload,
+    faBan,
+    faMinus,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Create = ({ listLink, createLink }) => {
-    const title = "Create a new user";
+    const title = "Create new users";
     const description = "User registration form on admin panel";
+    /**
+     * userInitialValue object
+     * @type {{name: string, email: string, password: number|string|symbol}}
+     */
     const userInitialValue = { name: null, email: null, password: null };
     const [users, setUser] = useState([userInitialValue]);
+
+    /**
+     * handleFormChange set user attributes and finally setUser state
+     * @param {number} index
+     * @param {object} event
+     */
+    const handleFormChange = (index, event) => {
+        let usersClone = [...users];
+        usersClone[index][event.target.name] = event.target.value;
+        setUser(usersClone);
+    };
+
+    /**
+     * addUserInput setUser state
+     * @param {object} event
+     */
+    const addUserInput = (event) => {
+        event.preventDefault();
+        let usersClone = [...users, userInitialValue];
+        setUser(usersClone);
+    };
+
+    /**
+     * removeUserInput remove user input and update setUser state
+     * @param {number} key
+     */
+    const removeUserInput = (key) => {
+        let usersClone = [...users];
+        usersClone.splice(key, 1);
+        setUser(usersClone);
+    };
+
+    /**
+     * removeUserInput remove user input and update setUser state
+     * @param {number} key
+     */
+    const resetUserInput = () => {
+        setUser([userInitialValue]);
+    };
 
     return (
         <Layout>
@@ -20,9 +70,42 @@ const Create = ({ listLink, createLink }) => {
                 listLink={listLink}
             />
             <div className="card mb-4">
-                <div className="card-header">
-                    <i className="fas fa-table me-1"></i>
-                    {title}
+                <div className="card-header d-flex justify-content-between">
+                    <div className="headerTitle">
+                        <i className="fas fa-table me-1"></i>
+                        {title}
+                    </div>
+                    {/** .headerTitle*/}
+                    <div className="btnGroup d-flex gap-1">
+                        <button
+                            type="button"
+                            className="btn badge bg-dark text-light"
+                            onClick={addUserInput}
+                            title="Add Row"
+                        >
+                            <FontAwesomeIcon icon={faPlus} /> Add Row
+                        </button>
+                        {/** .btn */}
+                        <button
+                            type="button"
+                            className="btn badge bg-dark text-light"
+                            onClick={resetUserInput}
+                            title="Reset"
+                        >
+                            <FontAwesomeIcon icon={faRefresh} /> Reset
+                        </button>
+                        {/** .btn */}
+                        <button
+                            type="button"
+                            className="btn badge bg-dark text-light"
+                            onClick={addUserInput}
+                            title="Save"
+                        >
+                            <FontAwesomeIcon icon={faUpload} /> Save
+                        </button>
+                        {/** .btn */}
+                    </div>
+                    {/** .btnGroup */}
                 </div>
                 {/** .card-header */}
                 <div className="card-body">
@@ -36,8 +119,8 @@ const Create = ({ listLink, createLink }) => {
                                                 type="text"
                                                 className="form-control"
                                                 id="name"
-                                                placeholder="Ex: Md Sakil Mahmud"
-                                                value=""
+                                                value={item.name}
+                                                placeholder="Full Name"
                                             />
                                             <label htmlFor="name">
                                                 Full Name
@@ -52,7 +135,8 @@ const Create = ({ listLink, createLink }) => {
                                                 type="email"
                                                 className="form-control"
                                                 id="email"
-                                                placeholder="email@domain.com"
+                                                value={item.email}
+                                                placeholder="Email"
                                             />
                                             <label htmlFor="email">Email</label>
                                         </div>
@@ -65,7 +149,8 @@ const Create = ({ listLink, createLink }) => {
                                                 type="password"
                                                 className="form-control"
                                                 id="password"
-                                                placeholder="123456"
+                                                value={item.password}
+                                                placeholder="Password"
                                             />
                                             <label htmlFor="password">
                                                 Password
@@ -76,16 +161,41 @@ const Create = ({ listLink, createLink }) => {
 
                                     <div className="col-md-1">
                                         <div className="form-floating mt-3 d-flex gap-1">
-                                            <a className="badge bg-primary">
+                                            {/* {key == users.length - 1 && (
+                                                <button
+                                                    type="button"
+                                                    className="btn badge bg-warning"
+                                                    onClick={addUserInput}
+                                                    title="Add Row"
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={faPlus}
+                                                    />
+                                                </button>
+                                            )} */}
+
+                                            <button
+                                                type="button"
+                                                className="btn badge bg-danger"
+                                                title={
+                                                    key != 0
+                                                        ? "Remove row"
+                                                        : "Can not be removed"
+                                                }
+                                                onClick={() =>
+                                                    key != 0
+                                                        ? removeUserInput(key)
+                                                        : false
+                                                }
+                                            >
                                                 <FontAwesomeIcon
-                                                    icon={faPlus}
+                                                    icon={
+                                                        key == 0
+                                                            ? faBan
+                                                            : faMinus
+                                                    }
                                                 />
-                                            </a>
-                                            <a className="badge bg-danger">
-                                                <FontAwesomeIcon
-                                                    icon={faTrash}
-                                                />
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                     {/** .col */}
@@ -94,14 +204,14 @@ const Create = ({ listLink, createLink }) => {
                         })}
                         {/** form.row */}
 
-                        <div className="col-12">
+                        {/* <div className="col-12">
                             <button
                                 type="submit"
                                 className="btn btn-primary float-end"
                             >
                                 Save
                             </button>
-                        </div>
+                        </div> */}
                         {/** .col */}
                     </form>
                     {/** form */}
