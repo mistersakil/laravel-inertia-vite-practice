@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use function PHPSTORM_META\map;
+
 class UsersController extends Controller
 {
     private $data = [];
@@ -14,6 +16,11 @@ class UsersController extends Controller
     {
         $this->data['listLink'] = route('admin.users.index');
         $this->data['createLink'] = route('admin.users.create');
+        $this->data['routes'] = [
+            'index' => route('admin.users.index'),
+            'create' => route('admin.users.create'),
+            'store' => route('admin.users.store'),
+        ];      
     }
     /**
      * Display a listing of the resource.
@@ -32,6 +39,8 @@ class UsersController extends Controller
             ];
         });
 
+
+
         return inertia('Backend/Users/Index', $this->data);
     }
 
@@ -42,6 +51,7 @@ class UsersController extends Controller
      */
     public function create()
     {
+        
         return inertia('Backend/Users/Create', $this->data);
     }
 
@@ -53,7 +63,24 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+
+        $formData = $request->all();
+
+        foreach($formData as $user){            
+            User::create($user);
+        };
+        
+        // User::create(
+        //     Request::validate([
+        //         'name' => ['required', 'max:50'],
+        //         'email' => ['required', 'max:50'],
+        //         'password' => ['required', 'max:50', 'email'],
+        //     ])
+        // );
+
+        // return redirect()->route('admin.users.index');
+        return back();
     }
 
     /**
