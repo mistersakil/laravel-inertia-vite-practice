@@ -20,7 +20,7 @@ class UsersController extends Controller
             'index' => route('admin.users.index'),
             'create' => route('admin.users.create'),
             'store' => route('admin.users.store'),
-        ];      
+        ];
     }
     /**
      * Display a listing of the resource.
@@ -51,7 +51,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        
+
         return inertia('Backend/Users/Create', $this->data);
     }
 
@@ -63,14 +63,19 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        
+
 
         $formData = $request->all();
+        try {
+            foreach ($formData as $user) {
+                User::create($user);
+            };
+            response()->json(['success' => false, 'code' => 400, 'message' => 'Successful']);
+        } catch (\Throwable $th) {
+            response()->json(['success' => false, 'code' => 400, 'message' => $th->getMessage()]);
+        }
 
-        foreach($formData as $user){            
-            User::create($user);
-        };
-        
+
         // User::create(
         //     Request::validate([
         //         'name' => ['required', 'max:50'],
@@ -80,7 +85,7 @@ class UsersController extends Controller
         // );
 
         // return redirect()->route('admin.users.index');
-        return back();
+        // return back();
     }
 
     /**

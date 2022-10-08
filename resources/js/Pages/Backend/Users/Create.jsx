@@ -10,9 +10,9 @@ import {
     faBan,
     faMinus,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { Inertia } from "@inertiajs/inertia";
 import { useForm } from "@inertiajs/inertia-react";
-import { useFormik } from "formik";
+import { toast } from "react-toastify";
 
 const Create = ({ listLink, createLink, routes }) => {
     const title = "Create new users";
@@ -23,60 +23,85 @@ const Create = ({ listLink, createLink, routes }) => {
      * @type {{name: string, email: string, password: number|string|symbol}}
      */
     const userInitialValue = { name: "", email: "", password: "" };
-    const { values: users, handleChange } = useFormik({
-        initialValues: [userInitialValue],
-    });
-    const { submit, post, processing, progress } = useForm({});
+    const [users, setUser] = useState([userInitialValue]);
+    const { processing } = useForm({});
 
-    console.log(users);
+    /**
+     * handleFormChange set user attributes and finally setUser state
+     * @param {number} index
+     * @param {object} event
+     */
+    const handleFormChange = (index, event) => {
+        let usersClone = [...users];
+        usersClone[index][event.target.id] = event.target.value;
+        setUser(usersClone);
+    };
+
     /**
      * addUserInput setUser state
      * @param {object} event
      */
-    // const addUserInput = (event) => {
-    //     event.preventDefault();
-    //     let usersClone = [...users, userInitialValue];
-    //     setUser(usersClone);
-    // };
+    const addUserInput = (event) => {
+        event.preventDefault();
+        let usersClone = [...users, userInitialValue];
+        setUser(usersClone);
+    };
 
     /**
      * removeUserInput remove user input and update setUser state
      * @param {number} key
      */
-    // const removeUserInput = (key) => {
-    //     let usersClone = [...users];
-    //     usersClone.splice(key, 1);
-    //     setUser(usersClone);
-    // };
+    const removeUserInput = (key) => {
+        let usersClone = [...users];
+        usersClone.splice(key, 1);
+        setUser(usersClone);
+    };
 
     /**
      * removeUserInput remove user input and update setUser state
      * @param {number} key
      */
-    // const resetUserInput = () => {
-    //     setUser([userInitialValue]);
-    // };
+    const resetUserInput = () => {
+        setUser([userInitialValue]);
+    };
 
     /**
      * save users
      */
-    // const store = () => {
-    //     console.log(routes.store);
-    //     console.log(users);
-    //     // post(, users);
-    //     post(routes.store, {
-    //         preserveScroll: true,
-    //         onSuccess: () => resetUserInput(),
-    //     });
-    // };
+    const store = () => {
+        Inertia.visit(routes.store, {
+            method: "post",
+            data: users,
+            replace: false,
+            preserveState: true,
+            preserveScroll: true,
+            only: [],
+            headers: {},
+            errorBag: null,
+            forceFormData: false,
+            onCancelToken: (cancelToken) => {},
+            onCancel: () => {},
+            onBefore: (visit) => {},
+            onStart: (visit) => {},
+            onProgress: (progress) => {},
+            onSuccess: (page) => {
+                resetUserInput();
+                toast.success("Successful", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            },
+            onError: (errors) => {},
+            onFinish: (visit) => {},
+        });
+    };
 
     return (
         <Layout>
             <BackHead title={title} description={description} />
             <Breadcrumb
                 title="Users"
-                createLink={routes.create}
-                listLink={routes.index}
+                createLink={createLink}
+                listLink={listLink}
             />
             <div className="card mb-4">
                 <div className="card-header d-flex justify-content-between">
@@ -98,10 +123,11 @@ const Create = ({ listLink, createLink, routes }) => {
                                                 type="text"
                                                 className="form-control"
                                                 id="name"
-                                                name="name"
                                                 value={item.name}
                                                 placeholder="Full Name"
-                                                onChange={handleChange}
+                                                onChange={(e) =>
+                                                    handleFormChange(key, e)
+                                                }
                                             />
                                             <label htmlFor="name">
                                                 Full Name
@@ -116,10 +142,11 @@ const Create = ({ listLink, createLink, routes }) => {
                                                 type="email"
                                                 className="form-control"
                                                 id="email"
-                                                name="email"
                                                 value={item.email}
                                                 placeholder="Email"
-                                                onChange={handleChange}
+                                                onChange={(e) =>
+                                                    handleFormChange(key, e)
+                                                }
                                             />
                                             <label htmlFor="email">Email</label>
                                         </div>
@@ -132,10 +159,11 @@ const Create = ({ listLink, createLink, routes }) => {
                                                 type="password"
                                                 className="form-control"
                                                 id="password"
-                                                name="password"
                                                 value={item.password}
                                                 placeholder="Password"
-                                                onChange={handleChange}
+                                                onChange={(e) =>
+                                                    handleFormChange(key, e)
+                                                }
                                             />
                                             <label htmlFor="password">
                                                 Password
@@ -181,7 +209,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                 <button
                                     type="button"
                                     className="btn btn-dark btn-sm"
-                                    onClick=""
+                                    onClick={addUserInput}
                                     title="Add Row"
                                 >
                                     <FontAwesomeIcon icon={faPlus} /> Add Row
@@ -190,7 +218,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                 <button
                                     type="button"
                                     className="btn btn-warning btn-sm "
-                                    onClick=""
+                                    onClick={resetUserInput}
                                     title="Reset"
                                 >
                                     <FontAwesomeIcon icon={faRefresh} /> Reset
@@ -199,6 +227,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                 <button
                                     type="button"
                                     className="btn btn-primary btn-sm"
+                                    onClick={store}
                                     title="Save"
                                     disabled={processing}
                                 >
