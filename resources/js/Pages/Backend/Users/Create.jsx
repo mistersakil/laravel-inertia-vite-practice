@@ -33,7 +33,6 @@ const Create = ({ listLink, createLink, routes }) => {
      */
     const handleInputChange = (index, event) => {
         setUser((previousUsers) => {
-            console.log(index);
             previousUsers[index][event.target.id] = event.target.value;
             return [...previousUsers];
         });
