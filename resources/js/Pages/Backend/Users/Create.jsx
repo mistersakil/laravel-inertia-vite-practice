@@ -22,29 +22,34 @@ const Create = ({ listLink, createLink, routes }) => {
      * userInitialValue object
      * @type {{name: string, email: string, password: number|string|symbol}}
      */
-    const userInitialValue = { name: "", email: "", password: "" };
+    const userInitialValue = { id: 1, name: "", email: "", password: "" };
     const [users, setUser] = useState([userInitialValue]);
     const { processing } = useForm({});
 
     /**
-     * handleFormChange set user attributes and finally setUser state
+     * handleInputChange set user attributes and finally setUser state
      * @param {number} index
      * @param {object} event
      */
-    const handleFormChange = (index, event) => {
-        let usersClone = [...users];
-        usersClone[index][event.target.id] = event.target.value;
-        setUser(usersClone);
+    const handleInputChange = (index, event) => {
+        setUser((previousUsers) => {
+            console.log(index);
+            previousUsers[index][event.target.id] = event.target.value;
+            return [...previousUsers];
+        });
     };
 
     /**
-     * addUserInput setUser state
+     * addNewRow and update setUser state
      * @param {object} event
      */
-    const addUserInput = (event) => {
-        event.preventDefault();
-        let usersClone = [...users, userInitialValue];
-        setUser(usersClone);
+    const addNewRow = (event) => {
+        setUser((previousUsers) => {
+            return [
+                ...previousUsers,
+                { ...userInitialValue, id: previousUsers.length + 1 },
+            ];
+        });
     };
 
     /**
@@ -126,7 +131,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                                 value={item.name}
                                                 placeholder="Full Name"
                                                 onChange={(e) =>
-                                                    handleFormChange(key, e)
+                                                    handleInputChange(key, e)
                                                 }
                                             />
                                             <label htmlFor="name">
@@ -145,7 +150,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                                 value={item.email}
                                                 placeholder="Email"
                                                 onChange={(e) =>
-                                                    handleFormChange(key, e)
+                                                    handleInputChange(key, e)
                                                 }
                                             />
                                             <label htmlFor="email">Email</label>
@@ -162,7 +167,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                                 value={item.password}
                                                 placeholder="Password"
                                                 onChange={(e) =>
-                                                    handleFormChange(key, e)
+                                                    handleInputChange(key, e)
                                                 }
                                             />
                                             <label htmlFor="password">
@@ -209,7 +214,7 @@ const Create = ({ listLink, createLink, routes }) => {
                                 <button
                                     type="button"
                                     className="btn btn-dark btn-sm"
-                                    onClick={addUserInput}
+                                    onClick={addNewRow}
                                     title="Add Row"
                                 >
                                     <FontAwesomeIcon icon={faPlus} /> Add Row
